@@ -6,28 +6,25 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Test;
+import org.testng.Assert;
+import org.testng.annotations.*;
 import utilities.BaseDriver;
+import utilities.MyMethods;
 
 import java.time.Duration;
 
-public class UpdateAccount_Test extends BaseDriver {
+public class US_102 extends BaseDriver {
 
-    Actions actions = new Actions(driver);
     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-    @BeforeTest
+    @BeforeMethod
     public void initTestData(){
-        driver.get("https://www.lidl.com/stores");
+        driver.get("https://www.lidl.com/register");
     }
+
     @Test
     public void registerTest(){
-        WebElement cookie = driver.findElement(By.xpath("//div[@id='onetrust-close-btn-container']"));
-        wait.until(ExpectedConditions.elementToBeClickable(cookie));
-        cookie.click();
-        wait.until(ExpectedConditions.invisibilityOf(cookie));
+        MyMethods.cookies();
 
         WebElement firstNameInput = driver.findElement(By.cssSelector("input[name='firstName']"));
         wait.until(ExpectedConditions.elementToBeClickable(firstNameInput));
@@ -46,7 +43,7 @@ public class UpdateAccount_Test extends BaseDriver {
         passwordInput.sendKeys("TechnoStudy01!");
 
         WebElement phoneInput = driver.findElement(By.cssSelector("input[name='phone']"));
-        phoneInput.sendKeys("1598754448");
+        phoneInput.sendKeys("1558754448");
 
         WebElement zipInput = driver.findElement(By.cssSelector("input[name='zip']"));
         zipInput.sendKeys("22043");
@@ -66,10 +63,14 @@ public class UpdateAccount_Test extends BaseDriver {
         WebElement submitButton = driver.findElement(By.cssSelector("button[type='submit']"));
         submitButton.click();
 
+//        wait.until(ExpectedConditions.urlToBe("https://www.lidl.com/stores"));
+//        String url = driver.getCurrentUrl();
+//        Assert.assertEquals(url, "https://www.lidl.com/stores");
+
     }
 
-    @AfterTest
+    @AfterClass
     public void close(){
-//        driver.quit();
+        driver.quit();
     }
 }
